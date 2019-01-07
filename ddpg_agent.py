@@ -22,7 +22,7 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 class Agent():
     """Interacts with and learns from the environment."""
     
-    def __init__(self, state_size, action_size, random_seed):
+    def __init__(self, state_size, action_size, random_seed, actor_file=None, critic_file=None):
         """Initialize an Agent object.
         
         Params
@@ -44,6 +44,10 @@ class Agent():
         self.critic_local = Critic(state_size, action_size, random_seed).to(device)
         self.critic_target = Critic(state_size, action_size, random_seed).to(device)
         self.critic_optimizer = optim.Adam(self.critic_local.parameters(), lr=LR_CRITIC, weight_decay=WEIGHT_DECAY)
+
+        if actor_file and critic_file:
+            self.actor_local.load_state_dict(torch.load(actor_file))
+            self.critic_local.load_state_dict(torch.load(critic_file))
 
         # Noise process
         self.noise = OUNoise(action_size, random_seed)
