@@ -5,6 +5,7 @@ To set up your python environment to run the code in this repository, follow the
 1. Create (and activate) a new environment with Python 3.6.
 
 ```bash
+conda update conda
 conda create --name drlnd python=3.6 
 source activate drlnd (Or just activate drlnd for windows 10)
 ```
@@ -14,7 +15,6 @@ source activate drlnd (Or just activate drlnd for windows 10)
 git clone https://github.com/openai/gym.git
 cd gym/
 pip install -e .
-pip install -e .[box2d]
 pip install -e .[classic_control]
 conda install -c pytorch pytorch==0.4.0
 ```
@@ -22,7 +22,7 @@ conda install -c pytorch pytorch==0.4.0
 3. Clone the repository (if you haven't already!), and navigate to the `python/` folder.  Then, install several dependencies.
 ```bash
 git clone "URL of this repository"
-cd Navigation/python
+cd Continuous-Control/python
 pip install .
 ```
 
