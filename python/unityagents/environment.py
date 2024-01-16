@@ -217,7 +217,7 @@ class UnityEnvironment(object):
                 self.proc1 = subprocess.Popen(docker_ls,
                                               stdout=subprocess.PIPE,
                                               stderr=subprocess.PIPE,
-                                              shell=True)
+                                              shell=False)
 
     def get_communicator(self, worker_id, base_port):
         return RpcCommunicator(worker_id, base_port)
