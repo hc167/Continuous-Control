@@ -53,7 +53,7 @@ default:
     use_curiosity: false
     curiosity_strength: 0.0
     curiosity_enc_size: 1
-''')
+''', Loader=yaml.SafeLoader)
 
 dummy_bc_config = yaml.load('''
 default:
@@ -80,7 +80,7 @@ default:
     use_curiosity: false
     curiosity_strength: 0.0
     curiosity_enc_size: 1
-''')
+''', Loader=yaml.SafeLoader)
 
 dummy_bad_config = yaml.load('''
 default:
@@ -104,7 +104,7 @@ default:
     summary_freq: 1000
     use_recurrent: false
     memory_size: 8
-''')
+''', Loader=yaml.SafeLoader)
 
 
 @mock.patch('unityagents.UnityEnvironment.executable_launcher')

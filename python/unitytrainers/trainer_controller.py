@@ -191,7 +191,7 @@ class TrainerController(object):
     def _load_config(self):
         try:
             with open(self.trainer_config_path) as data_file:
-                trainer_config = yaml.load(data_file)
+                trainer_config = yaml.load(data_file, Loader=yaml.SafeLoader)
                 return trainer_config
         except IOError:
             raise UnityEnvironmentException("""Parameter file could not be found here {}.
