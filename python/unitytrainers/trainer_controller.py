@@ -121,7 +121,7 @@ class TrainerController(object):
         if len(scopes) > 1:
             self.logger.info("List of available scopes :")
             for scope in scopes:
-                self.logger.info("\t" + scope)
+                self.logger.info("\t%s", scope)
         self.logger.info("List of nodes to export :")
         for n in nodes:
             self.logger.info("\t" + n)
