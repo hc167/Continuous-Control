@@ -1,5 +1,4 @@
 import numpy as np
-import random
 import copy
 from collections import namedtuple, deque
 
@@ -8,6 +7,7 @@ from model import Actor, Critic
 import torch
 import torch.nn.functional as F
 import torch.optim as optim
+import secrets
 
 class Agent():
     """Interacts with and learns from the environment."""
@@ -23,7 +23,7 @@ class Agent():
         """
         self.state_size = state_size
         self.action_size = action_size
-        self.seed = random.seed(random_seed)
+        self.seed = secrets.SystemRandom().seed(random_seed)
 		
         self.batch_size = batch_size
         self.gamma = gamma
@@ -150,7 +150,7 @@ class OUNoise:
         self.mu = mu * np.ones(size)
         self.theta = theta
         self.sigma = sigma
-        self.seed = random.seed(seed)
+        self.seed = secrets.SystemRandom().seed(seed)
         self.reset()
 
     def reset(self):
@@ -179,7 +179,7 @@ class ReplayBuffer:
         self.memory = deque(maxlen=buffer_size)  # internal memory (deque)
         self.batch_size = batch_size
         self.experience = namedtuple("Experience", field_names=["state", "action", "reward", "next_state", "done"])
-        self.seed = random.seed(seed)
+        self.seed = secrets.SystemRandom().seed(seed)
     
     def add(self, state, action, reward, next_state, done):
         """Add a new experience to memory."""
@@ -188,7 +188,7 @@ class ReplayBuffer:
     
     def sample(self):
         """Randomly sample a batch of experiences from memory."""
-        experiences = random.sample(self.memory, k=self.batch_size)
+        experiences = secrets.SystemRandom().sample(self.memory, k=self.batch_size)
 
         states = torch.from_numpy(np.vstack([e.state for e in experiences if e is not None])).float().to(self.device)
         actions = torch.from_numpy(np.vstack([e.action for e in experiences if e is not None])).float().to(self.device)
