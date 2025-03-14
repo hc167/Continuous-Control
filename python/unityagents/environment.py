@@ -20,6 +20,7 @@ from .socket_communicator import SocketCommunicator
 
 from sys import platform
 from PIL import Image
+from security import safe_command
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("unityagents")
@@ -187,12 +188,10 @@ class UnityEnvironment(object):
             # Launch Unity environment
             if not docker_training:
                 if no_graphics:
-                    self.proc1 = subprocess.Popen(
-                        [launch_string,'-nographics', '-batchmode',
+                    self.proc1 = safe_command.run(subprocess.Popen, [launch_string,'-nographics', '-batchmode',
                          '--port', str(self.port)])
                 else:
-                    self.proc1 = subprocess.Popen(
-                        [launch_string, '--port', str(self.port)])
+                    self.proc1 = safe_command.run(subprocess.Popen, [launch_string, '--port', str(self.port)])
             else:
                 """
                 Comments for future maintenance:
@@ -214,7 +213,7 @@ class UnityEnvironment(object):
                 docker_ls = ("exec xvfb-run --auto-servernum"
                              " --server-args='-screen 0 640x480x24'"
                              " {0} --port {1}").format(launch_string, str(self.port))
-                self.proc1 = subprocess.Popen(docker_ls,
+                self.proc1 = safe_command.run(subprocess.Popen, docker_ls,
                                               stdout=subprocess.PIPE,
                                               stderr=subprocess.PIPE,
                                               shell=False)
